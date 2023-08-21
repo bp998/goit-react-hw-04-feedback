@@ -1,16 +1,15 @@
+import Feedback from './Feedback/index.jsx';
+// import FeedbackOptions from './FeedbackOptions/index.jsx';
+// import Statistics from './Statistics/index.jsx';
+import Section from './Section/index.jsx';
+// import Notification from './Notification/index.jsx';
+
 export const App = () => {
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
+    <div>
+      <Section title="Please leave feedback">
+        <Feedback />
+      </Section>
     </div>
   );
 };
