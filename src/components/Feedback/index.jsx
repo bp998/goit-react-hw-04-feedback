@@ -1,58 +1,63 @@
 import Statistics from 'components/Statistics';
 import css from './Feedback.module.css';
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import Notification from 'components/Notification';
 import FeedbackOptions from 'components/FeedbackOptions';
 
-class Feedback extends Component {
-  state = {
-    good: 0,
-    neutral: 0,
-    bad: 0,
+const Feedback = () => {
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
+
+  const handleClick = option => {
+    switch (option) {
+      case 'good':
+        setGood(good + 1);
+        break;
+      case 'neutral':
+        setNeutral(neutral + 1);
+        break;
+      case 'bad':
+        setBad(bad + 1);
+        break;
+      default:
+        break;
+    }
   };
 
-  handleClick = option => {
-    this.setState(prevState => ({
-      ...prevState,
-      [option]: prevState[option] + 1,
-    }));
+  const isVisible = () => {
+    return countTotalFeedback() === 0;
   };
 
-  isVisible = () => {
-    return this.countTotalFeedback() === 0;
+  const countTotalFeedback = () => {
+    return good + neutral + bad;
   };
 
-  countTotalFeedback = () => {
-    const value = this.state.good + this.state.neutral + this.state.bad;
-    return value;
+  const countPositiveFeedback = () => {
+    return countTotalFeedback()
+      ? `${((good / countTotalFeedback()) * 100).toFixed(0)}%`
+      : `0%`;
   };
 
-  countPositiveFeedback = () => {
-    const total = this.state.good + this.state.bad + this.state.neutral;
-    return total ? `${((this.state.good / total) * 100).toFixed(0)}%` : `0%`;
-  };
+  return (
+    <div className={css.feedback}>
+      <FeedbackOptions
+        options={['good', 'bad', 'neutral']}
+        onLeaveFeedback={handleClick}
+      />
 
-  render() {
-    return (
-      <div className={css.feedback}>
-        <FeedbackOptions
-          options={['good', 'bad', 'neutral']}
-          onLeaveFeedback={this.handleClick}
-        />
+      <Statistics
+        good={good}
+        neutral={neutral}
+        bad={bad}
+        countTotalFeedback={countTotalFeedback()}
+        countPositiveFeedback={countPositiveFeedback()}
+        isVisible={isVisible()}
+      />
 
-        <Statistics
-          good={this.state.good}
-          neutral={this.state.neutral}
-          bad={this.state.bad}
-          countTotalFeedback={this.countTotalFeedback()}
-          countPositiveFeedback={this.countPositiveFeedback()}
-          isVisible={this.isVisible()}
-        />
-
-        <Notification isVisible={this.isVisible()} />
-      </div>
-    );
-  }
-}
+      <Notification isVisible={isVisible()} />
+    </div>
+  );
+};
 
 export default Feedback;

@@ -1,15 +1,13 @@
-import { Component } from 'react';
 import css from './Section.module.css';
 
-class Section extends Component {
-  render() {
-    return (
-      <div className={css.feedbackCard}>
-        <h2>{this.props.title}</h2>
-        <div>{this.props.children}</div>
-      </div>
-    );
-  }
-}
+const Section = props => {
+  const { children, title } = props;
+  return (
+    <div className={css.feedbackCard}>
+      <h2>{title}</h2>
+      <div>{children}</div>
+    </div>
+  );
+};
 
 export default Section;
