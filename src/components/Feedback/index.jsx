@@ -34,7 +34,7 @@ class Feedback extends Component {
 
   render() {
     return (
-      <div>
+      <div className={css.feedback}>
         <FeedbackOptions
           options={['good', 'bad', 'neutral']}
           onLeaveFeedback={this.handleClick}

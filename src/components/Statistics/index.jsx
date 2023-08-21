@@ -24,7 +24,3 @@ class Statistics extends Component {
 }
 
 export default Statistics;
-
-{
-  /* <div className={this.isVisible() ? css.hidden : ''}></div> */
-}
